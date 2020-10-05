@@ -28,10 +28,8 @@ constexpr const char* const Card::SUIT_DIAMONDS;
 
 // add your code below
 
-Card::Card() {
-	rank = Card::RANK_TWO;
-	suit = Card::SUIT_SPADES;
-	
+Card::Card():rank(RANK_TWO), suit(SUIT_SPADES) {
+
 }
 
 Card::Card(const std::string& rank_in, const std::string& suit_in) {
@@ -45,4 +43,67 @@ std::string Card::get_rank() const {
 
 std::string Card::get_suit() const {
 	return suit;
+}
+
+std::string Card::get_suit(const std::string& trump) const {
+	if (this->is_left_bower(trump)) {
+		return trump;
+	}
+	else {
+		return suit;
+	}
+}
+
+bool Card::is_face() const {
+	if (rank == RANK_ACE) {
+		return true;
+	}
+	else if (rank == RANK_KING) {
+		return true;
+	}
+	else if (rank == RANK_QUEEN) {
+		return true;
+	}
+	else if (rank == RANK_JACK) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Card::is_right_bower(const std::string& trump) const {
+	if (rank == RANK_JACK && suit == trump) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Card::is_left_bower(const std::string& trump) const {
+	if (rank == RANK_JACK && Suit_next(suit) == trump) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+
+
+std::string Suit_next(const std::string& suit) {
+	if (suit == Card::SUIT_HEARTS) {
+		return Card::SUIT_DIAMONDS;
+	}
+	else if (suit == Card::SUIT_DIAMONDS) {
+		return Card::SUIT_HEARTS;
+	}
+	else if (suit == Card::SUIT_CLUBS) {
+		return Card::SUIT_SPADES;
+	}
+	else {
+		return Card::SUIT_CLUBS;
+	}
 }
