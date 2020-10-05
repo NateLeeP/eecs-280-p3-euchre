@@ -14,6 +14,63 @@ TEST(test_card_ctor) {
     ASSERT_EQUAL(Card::SUIT_HEARTS, c.get_suit());
 }
 
+TEST(test_card_constructor) {
+
+    Card c;
+    ASSERT_EQUAL(Card::RANK_TWO, c.get_rank());
+    ASSERT_EQUAL(Card::SUIT_SPADES, c.get_suit());
+
+}
+
+TEST(test_get_suit_trump) {
+    Card c(Card::RANK_ACE, Card::SUIT_CLUBS);
+    Card d(Card::RANK_JACK, Card::SUIT_CLUBS);
+    Card e(Card::RANK_JACK, Card::SUIT_SPADES);
+
+    ASSERT_EQUAL(Card::SUIT_CLUBS, c.get_suit(Card::SUIT_CLUBS));
+    ASSERT_EQUAL(Card::SUIT_CLUBS, c.get_suit(Card::SUIT_CLUBS));
+    ASSERT_EQUAL(Card::SUIT_CLUBS, c.get_suit(Card::SUIT_CLUBS));
+
+
+
+}
+
+TEST(test_is_face_function) {
+    Card a(Card::RANK_ACE, Card::SUIT_HEARTS);
+    Card b(Card::RANK_KING, Card::SUIT_HEARTS);
+    Card c(Card::RANK_QUEEN, Card::SUIT_HEARTS);
+    Card d(Card::RANK_JACK, Card::SUIT_HEARTS);
+    Card e(Card::RANK_TEN, Card::SUIT_HEARTS);
+
+    ASSERT_EQUAL(true, a.is_face());
+    ASSERT_EQUAL(true, b.is_face());
+    ASSERT_EQUAL(true, c.is_face());
+    ASSERT_EQUAL(true, d.is_face());
+    ASSERT_EQUAL(false, e.is_face());
+}
+
+TEST(test_is_right_bower) {
+    Card c(Card::RANK_JACK, Card::SUIT_HEARTS);
+    ASSERT_EQUAL(true, c.is_right_bower("Hearts"));
+    Card d("Jack", "Diamonds");
+    ASSERT_EQUAL(false, d.is_right_bower("Hearts"));
+}
+
+TEST(test_is_left_bower) {
+    Card c(Card::RANK_JACK, Card::SUIT_HEARTS);
+    Card d(Card::RANK_JACK, Card::SUIT_DIAMONDS);
+    Card e(Card::RANK_JACK, Card::SUIT_CLUBS);
+    ASSERT_EQUAL(true, c.is_left_bower(Card::SUIT_DIAMONDS));
+    ASSERT_EQUAL(false, d.is_left_bower(Card::SUIT_DIAMONDS));
+    ASSERT_EQUAL(true, e.is_left_bower(Card::SUIT_SPADES));
+}
+
+TEST(test_next_suit) {
+    Card c(Card::RANK_JACK, Card::SUIT_HEARTS);
+    ASSERT_EQUAL(Card::SUIT_DIAMONDS, Suit_next(c.get_suit()));
+    ASSERT_EQUAL(Card::SUIT_HEARTS, Suit_next(Suit_next(c.get_suit())));
+    ASSERT_EQUAL(Card::SUIT_SPADES, Suit_next(Card::SUIT_CLUBS));
+}
 // Add more test cases here
 
 TEST_MAIN()
