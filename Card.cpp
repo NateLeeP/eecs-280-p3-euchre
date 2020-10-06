@@ -73,25 +73,19 @@ bool Card::is_face() const {
 }
 
 bool Card::is_right_bower(const std::string& trump) const {
-	if (rank == RANK_JACK && suit == trump) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return (rank == RANK_JACK && suit == trump);
 }
-
 bool Card::is_left_bower(const std::string& trump) const {
-	if (rank == RANK_JACK && Suit_next(suit) == trump) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return (rank == RANK_JACK && Suit_next(suit) == trump);
 }
 
+bool Card::is_trump(const std::string& trump) const {
+	return suit == trump;
+}
 
-
+bool operator<(const Card& lhs, const Card& rhs) {
+	return lhs.get_rank() < rhs.get_rank();
+}
 
 std::string Suit_next(const std::string& suit) {
 	if (suit == Card::SUIT_HEARTS) {

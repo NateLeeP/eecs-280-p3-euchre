@@ -71,6 +71,31 @@ TEST(test_next_suit) {
     ASSERT_EQUAL(Card::SUIT_HEARTS, Suit_next(Suit_next(c.get_suit())));
     ASSERT_EQUAL(Card::SUIT_SPADES, Suit_next(Card::SUIT_CLUBS));
 }
+
+TEST(test_is_trump) {
+    Card c(Card::RANK_JACK, Card::SUIT_CLUBS);
+    ASSERT_EQUAL(true, c.is_trump(Card::SUIT_CLUBS));
+}
+
+TEST(test_card_inequality) {
+    Card w(Card::RANK_JACK, Card::SUIT_HEARTS);
+    Card d(Card::RANK_EIGHT, Card::SUIT_HEARTS);
+    Card k(Card::RANK_KING, Card::SUIT_HEARTS);
+    Card a(Card::RANK_ACE, Card::SUIT_HEARTS);
+    Card q(Card::RANK_QUEEN, Card::SUIT_DIAMONDS);
+    ASSERT_EQUAL(false, Card::RANK_QUEEN > Card::RANK_ACE);
+    ASSERT_EQUAL(true, w < k);
+    ASSERT_EQUAL(true, q < a);
+    
+    for (unsigned int i = 0; i < (sizeof(SUIT_NAMES_BY_WEIGHT) / sizeof(SUIT_NAMES_BY_WEIGHT[0])) - 1; i++) {
+        ASSERT_EQUAL(true, SUIT_NAMES_BY_WEIGHT[i] < SUIT_NAMES_BY_WEIGHT[i + 1]);
+    }
+    
+
+
+}
 // Add more test cases here
 
 TEST_MAIN()
+
+
