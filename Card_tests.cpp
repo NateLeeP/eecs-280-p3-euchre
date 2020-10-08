@@ -78,18 +78,26 @@ TEST(test_is_trump) {
 }
 
 TEST(test_card_inequality) {
-    Card w(Card::RANK_JACK, Card::SUIT_HEARTS);
-    Card d(Card::RANK_EIGHT, Card::SUIT_HEARTS);
-    Card k(Card::RANK_KING, Card::SUIT_HEARTS);
-    Card a(Card::RANK_ACE, Card::SUIT_HEARTS);
-    Card q(Card::RANK_QUEEN, Card::SUIT_DIAMONDS);
-    ASSERT_EQUAL(false, Card::RANK_QUEEN > Card::RANK_ACE);
-    ASSERT_EQUAL(true, w < k);
+    Card w("Jack", "Hearts");
+    Card d("Eight", "Hearts");
+    Card k("King", "Hearts");
+    Card a("Ace", "Hearts"); // Ace is screwed up!! Should be top of order
+    Card q("Queen", Card::SUIT_DIAMONDS);
+
     ASSERT_EQUAL(true, q < a);
+    ASSERT_EQUAL(true, k < a);
+    ASSERT_EQUAL(true, w < k);
+    ASSERT_EQUAL(true, q < k);
+
     
-    for (unsigned int i = 0; i < (sizeof(SUIT_NAMES_BY_WEIGHT) / sizeof(SUIT_NAMES_BY_WEIGHT[0])) - 1; i++) {
-        ASSERT_EQUAL(true, SUIT_NAMES_BY_WEIGHT[i] < SUIT_NAMES_BY_WEIGHT[i + 1]);
-    }
+    
+    //ASSERT_EQUAL(true, w < k);
+    //ASSERT_EQUAL(true, k < a);
+    //ASSERT_EQUAL(true, k < a);
+    // Ranks behave accordingly 
+    //ASSERT_EQUAL(true, w < k);
+    //ASSERT_EQUAL(true, q < a); // Card queen is BUGGED
+    //ASSERT_EQUAL(true, q.get_rank() < a.get_rank()); // Is the issue with .get_rank?
     
 
 
