@@ -84,7 +84,24 @@ bool Card::is_trump(const std::string& trump) const {
 }
 
 bool operator<(const Card& lhs, const Card& rhs) {
-	return lhs.get_rank() < rhs.get_rank();
+	
+	auto lhs_rank = lhs.get_rank();
+	auto rhs_rank = rhs.get_rank();
+
+	unsigned int i = 0;
+	unsigned int j = 0;
+	for (; i < sizeof(RANK_NAMES_BY_WEIGHT) / sizeof(RANK_NAMES_BY_WEIGHT[0]); i++) {
+		if (lhs_rank == RANK_NAMES_BY_WEIGHT[i]) {
+			break;
+		}
+	}
+	for (; j < sizeof(RANK_NAMES_BY_WEIGHT) / sizeof(RANK_NAMES_BY_WEIGHT[0]); j++) {
+		if (rhs_rank == RANK_NAMES_BY_WEIGHT[j]) {
+			break;
+		}
+	}
+	
+	return i < j;
 }
 
 std::string Suit_next(const std::string& suit) {
